@@ -18,6 +18,10 @@
 - [Kleppmann, Martin]. *Designing Data-Intensive Applications*. O'Reilly Media, 2017.
     - __Rating:__ ⭐⭐⭐⭐⭐
     - __Review:__ Though I'm only part way through it, this book is a classic, and it teaches you a ton about building large scale data systems. This means it covers scalability.
+- [Beyer, Betsy], et al., editors. *Site Reliability Engineering: How Google Runs Production Systems*. O'Reilly Media, Inc., 2017.
+    - __Rating:__ ⭐⭐⭐⭐
+    - __Review:__ Did you know that SRE is a subset of DevOps? Or how Borg, Google's cluster operating system works? This book is straightforwardly written and packed with knowledge of how things are done at Google, so that you can apply it to your own company.
+    - __Link:__ https://sre.google/sre-book/table-of-contents/ 
 
 ## GitHub
 - [system-design-primer](https://github.com/donnemartin/system-design-primer)
