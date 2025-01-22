@@ -1,0 +1,30 @@
+Logging Cost
+
+Q1: How much will the storage of logs cost for a standard, monolithic 100k RPS web application?
+
+Some assumptions:
+- Store logs for 5 years
+
+
+Estimation:
+- Need to estimate log generation in terms of storage / second, to get the total cost per month.
+- We can then mulitply this by 5 years to get the total logs generated in a 5 year window. We may 
+go slightly under or over this cost, especially as the requests per second of the application 
+varies. 
+- Okay, we have log generation as 100k requests / second * average number of GBs per request
+- Let's say that that each log line averages to 128 characters. If it were more, it would 
+be difficult to fit on a screen. 
+- Therefore, we're looking at 128 bytes * 100k requests / second = 12,800,000 = 12.8 MB per second.
+- 13 MB per second * 5 years -- how many seconds in a year? Roughly 31,536,000, ignoring leap years.
+5 years is roughly 150 million seconds then. So 13MB/s * 150 million seconds = 13 * 150 = 1500 + 450 = 1950 million MB = 1950 TB. Since we rounded down seconds earlier, we can scale it back up to 2 PB.
+That's a lot of storage. So we would need to do something to reduce the amount of logs.
+
+If we're estimating cost, we're looking at infrequent access, so one cent per gigabyte per month.
+So maybe 0.01 / GB, so $20k a month. Wow, less than I thought. 
+
+Actual solution:
+
+Closer to 1k - 10k a month. Fair. I guess, who's storing storage for 5 years. Should examine 
+my assumptions a bit.
+
+

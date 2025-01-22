@@ -1,0 +1,24 @@
+1. Shortening and redirects
+2. Analytics tracking (number of clicks / geographic distribution)
+	- My first thought here is that the number of clicks will lead to write amplification, and mapping the geographic distribution would require reading the IP address of the incoming requests
+3. Custom alias support (users can request specific URLs)
+4. Link expiration feature
+	- Can be specified at creation time
+	- Fairly trivial
+5. Basic rate limiting to prevent abuse
+	- This is fairly trivial -- there are plenty of middleware which prevent this, with possible concerns when moving to a 
+	distributed architecture. But let's cross that bridge when we get to it.
+
+Scale requirements:
+- How many URL shortenings per day?
+	- 600 million per month (per Wikipedia -- we want to handle similar scale)
+		- That's 20 million per day on average
+		- That's roughly 200 per second, 250 if you want to be conservative.
+- How many redirects per day?
+	- The distribution is most likely pareto, with a small number of links getting most of the traffic.
+		- I'm at a loss for how to predict the number of redirects per day accurately, but if I had to go based on gut, I would say that the average is somewhere between 5 and 1000 reads per URL. But I would also estimate that eliminating the top 10 percent, it would likely drop down to, say, 5-50.
+- Expected latency?
+	- Shortening
+		- Can be up to several seconds, because it's a one time activity, usually. Creating a new link should be a rare task, unless it is being done in bulk, in which case thorughput should be higher.
+	- Redirection
+		- Users expect a good site to load in less than 100ms. You're basically navigating to two sites (one being our app, and the other being the destination url), then we should aim to take AT MOST half that time. So I think 50ms is a good target. To put it in perspective, google search is around 200ms.

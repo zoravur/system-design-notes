@@ -1,0 +1,23 @@
+Expected Database Query Latency
+
+Problem #2: Your SSD-backed database has a usage-pattern that rewards you with a 80% page-cache
+hit-rate (i.e. 80% of disk reads are served directly out of memory instead of going to the SSD). 
+The median is 50 distinct disk pages for a query to gather its query results (e.g. InnoDB pages 
+in MySQL). What is the expected average query time from your database?
+
+SSD-backed page-cache hit rate = 0.8
+Memory read latency = 100 ns
+SSD disk seek = 1 ms; assume a lookup requires a disk seek
+
+- Assuming no parallelism, roughly 40 out of 50 pages are served out of memory for a total of 4 us.
+The disk seeks are 1 ms, which we require roughly 10 of. Therefore, the total cost is dominated 
+by the disk seeks, and is 10ms (assuming no parallelism). If there is parallelism, 1 ms. 
+
+Solution: 1-10 ms after factoring in the database.
+
+Comments: I was mostly right in my logic, it was that my base rates were off. But I feel like if 
+I walk through my logic it's okay to have an incorrect assumption, because assumptions can be 
+updated.
+
+- According to napkin-math, a random SSD read is 100 us. Which is an order of magnitude lower than
+I expected. 
